@@ -17,16 +17,13 @@ struct ContentView: View {
     private var items: FetchedResults<Item>
 
     var body: some View {
+        return VStack {
         List {
             ForEach(items) { item in
                 Text("Item at \(item.timestamp!, formatter: itemFormatter)")
             }
             .onDelete(perform: deleteItems)
         }
-        .toolbar {
-            #if os(iOS)
-            EditButton()
-            #endif
 
             Button(action: addItem) {
                 Label("Add Item", systemImage: "plus")
@@ -35,10 +32,14 @@ struct ContentView: View {
     }
 
     private func addItem() {
+        //TODO: shows a page where they can fill out information about the item
+        
+        
         withAnimation {
             let newItem = Item(context: viewContext)
             newItem.timestamp = Date()
-
+            
+            
             do {
                 try viewContext.save()
             } catch {
